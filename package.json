@@ -1,6 +1,6 @@
 {
     "name": "use-indexeddb-hook",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "A React hook to interact with IndexedDB.",
     "main": "src/useIndexedDB.js",
     "scripts": {
@@ -13,7 +13,7 @@
       "url": "https://github.com/cstpraveen/use-indexeddb-hook.git"
     },
     "keywords": ["react", "hook", "indexeddb"],
-    "author": "Your Name",
+    "author": "Praveen Srinivasan",
     "license": "MIT",
     "peerDependencies": {
       "react": ">=16.8.0"
