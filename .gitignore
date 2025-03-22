@@ -1,0 +1,42 @@
+# Node Modules
+node_modules/
+
+# Build Output
+build/
+dist/
+lib/
+es/
+umd/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Coverage Reports
+coverage/
+
+# Optional: Environment files (if you have them)
+.env
+.env.local
+.env.development
+.env.development.local
+.env.production
+.env.production.local
+
+# Optional: Temporary files
+tmp/
+temp/
+
+# Optional: Package lock file (if you want to keep it out of Git)
+# package-lock.json
+
+# Optional: Yarn lock file (if you want to keep it out of Git)
+# yarn.lock
