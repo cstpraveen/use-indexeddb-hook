@@ -2,6 +2,9 @@
 
 A React hook to interact with IndexedDB.
 
+## Demo
+[CodeSandbox Demo](https://codesandbox.io/p/sandbox/vfttxg)
+
 ## Installation
 
 ```bash

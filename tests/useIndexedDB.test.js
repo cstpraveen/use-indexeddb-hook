@@ -7,6 +7,7 @@ describe("useIndexedDB", () => {
 
   beforeAll(() => {
     // Mock IndexedDB
+    // eslint-disable-next-line no-unused-vars
     jest.spyOn(indexedDB, "open").mockImplementation((name, version) => {
       const request = {
         onupgradeneeded: null,
