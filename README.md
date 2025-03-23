@@ -5,6 +5,11 @@ A React hook to interact with IndexedDB.
 ## Demo
 [CodeSandbox Demo](https://codesandbox.io/p/sandbox/vfttxg)
 
+## Feature Requests
+Have a feature request? I'm listening! Please open an issue on GitHub using the following link, and I'll do my best to implement it within a day.
+
+[Raise a Feature Request](https://github.com/cstpraveen/use-indexeddb-hook/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=Feature+Request%3A+)
+
 ## Installation
 
 ```bash

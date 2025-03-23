@@ -1,14 +1,31 @@
-import { renderHook, act } from "@testing-library/react-hooks";
+import React from 'react';
+import { render, act, waitFor } from "@testing-library/react";
 import useIndexedDB from "../src/useIndexedDB";
+
+// Custom renderHook function for testing hooks
+const renderHook = (callback) => {
+  let result;
+  const TestComponent = () => {
+    result = callback();
+    return null;
+  };
+  render(<TestComponent />);
+  return { result };
+};
 
 describe("useIndexedDB", () => {
   const dbName = "TestDB";
   const storeName = "TestStore";
 
   beforeAll(() => {
-    // Mock IndexedDB
-    // eslint-disable-next-line no-unused-vars
-    jest.spyOn(indexedDB, "open").mockImplementation((name, version) => {
+    if (!window.indexedDB) {
+      window.indexedDB = {};
+    }
+    if (!window.indexedDB.open) {
+      window.indexedDB.open = jest.fn();
+    }
+
+    jest.spyOn(window.indexedDB, "open").mockImplementation((name, version) => {
       const request = {
         onupgradeneeded: null,
         onsuccess: null,
@@ -34,35 +51,33 @@ describe("useIndexedDB", () => {
   });
 
   it("should initialize the database", async () => {
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useIndexedDB(dbName, storeName)
-    );
-    await waitForNextUpdate();
-    expect(result.current.db).toBeDefined();
+    const { result } = renderHook(() => useIndexedDB(dbName, storeName));
+    await waitFor(() => expect(result.db).toBeDefined());
   });
 
   it("should add a record", async () => {
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useIndexedDB(dbName, storeName)
-    );
-    await waitForNextUpdate();
+    const { result } = renderHook(() => useIndexedDB(dbName, storeName));
+    await waitFor(() => expect(result.db).toBeDefined());
+    //add a small timeout.
+    await waitFor(()=> expect(result.loading).toBe(false));
+
     await act(async () => {
-      await result.current.addRecord({ name: "Test Record" });
+      await result.addRecord({ name: "Test Record" });
     });
-    expect(result.current.error).toBeNull();
+    expect(result.error).toBeNull();
   });
 
   it("should handle errors", async () => {
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useIndexedDB(dbName, storeName)
-    );
-    await waitForNextUpdate();
-    jest.spyOn(result.current.db, "transaction").mockImplementation(() => {
+    const { result } = renderHook(() => useIndexedDB(dbName, storeName));
+    await waitFor(() => expect(result.db).toBeDefined());
+    await waitFor(()=> expect(result.loading).toBe(false));
+
+    jest.spyOn(result.db, "transaction").mockImplementation(() => {
       throw new Error("Test Error");
     });
     await act(async () => {
-      await result.current.addRecord({ name: "Test Record" });
+      await result.addRecord({ name: "Test Record" });
     });
-    expect(result.current.error).toBeDefined();
+    expect(result.error).toBeDefined();
   });
 });
